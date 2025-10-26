@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mateoduque/Documents/Maestria/Trabajo Final Analitica/mlruns/699366144089649248/750f1328b0824ccf840ee3ece9df81e1/artifacts
+end_time: 1761486098141
+entry_point_name: ''
+experiment_id: '699366144089649248'
+lifecycle_stage: active
+run_id: 750f1328b0824ccf840ee3ece9df81e1
+run_name: rebellious-deer-382
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761486095706
+status: 3
+tags: []
+user_id: mateoduque

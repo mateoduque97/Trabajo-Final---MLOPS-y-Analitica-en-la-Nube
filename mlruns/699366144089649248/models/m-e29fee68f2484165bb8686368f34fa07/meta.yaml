@@ -1,0 +1,10 @@
+artifact_location: file:///Users/mateoduque/Documents/Maestria/Trabajo Final Analitica/mlruns/699366144089649248/models/m-e29fee68f2484165bb8686368f34fa07/artifacts
+creation_timestamp: 1761486095791
+experiment_id: '699366144089649248'
+last_updated_timestamp: 1761486098139
+model_id: m-e29fee68f2484165bb8686368f34fa07
+model_type: null
+name: rf_titanic_model
+source_run_id: 750f1328b0824ccf840ee3ece9df81e1
+status: 2
+status_message: null

@@ -1,0 +1,8 @@
+pandas
+scikit-learn
+mlflow
+pyyaml
+pytest
+joblib
+xgboost
+flake8
