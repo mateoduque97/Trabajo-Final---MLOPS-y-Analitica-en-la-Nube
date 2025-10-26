@@ -59,11 +59,16 @@ def main(cfg_path="config.yaml"):
         print("scaler_path:", scaler_path)
         mlflow.log_artifact(scaler_path)
 
-        # guardar modelo en artifacts y loguear
-        model_path = os.path.join(artifacts_dir, cfg['output']['model_name'])
-        print("model_path:", model_path)
-        mlflow.sklearn.save_model(model, model_path)
-        mlflow.log_artifact(model_path)
+        # guardar modelo en artifacts y loguear con firma y ejemplo de entrada
+        from mlflow.models.signature import infer_signature
+        signature = infer_signature(X_train, model.predict(X_train))
+        input_example = X_train[:5]
+        mlflow.sklearn.log_model(
+            model,
+            cfg['output']['model_name'],
+            signature=signature,
+            input_example=input_example
+        )
 
         print("Run metrics:", metrics)
 
