@@ -25,9 +25,10 @@ def main(cfg_path="config.yaml"):
     # Construir modelo
     model = build_model(cfg['train'])
 
-    # Crear carpeta artifacts relativa
+    # Crear carpeta artifacts relativa (siempre relativa, nunca absoluta)
     artifacts_dir = "artifacts"
-    os.makedirs(artifacts_dir, exist_ok=True)
+    if not os.path.exists(artifacts_dir):
+        os.makedirs(artifacts_dir, exist_ok=True)
 
     # Entrenar y loguear
     with mlflow.start_run():
@@ -44,16 +45,17 @@ def main(cfg_path="config.yaml"):
             mlflow.log_metric(k, v)
 
         # guardar scaler localmente y como artifact
-        scaler_path = os.path.join(artifacts_dir, "scaler.joblib")
-        joblib.dump(scaler, scaler_path)
-        mlflow.log_artifact(scaler_path)
+    scaler_path = os.path.join(artifacts_dir, "scaler.joblib")
+    joblib.dump(scaler, scaler_path)
+    # loguear scaler como artifact usando ruta relativa
+    mlflow.log_artifact(os.path.relpath(scaler_path))
 
-        # guardar modelo en artifacts y loguear
-        model_path = os.path.join(artifacts_dir, cfg['output']['model_name'])
-        mlflow.sklearn.save_model(model, model_path)
-        mlflow.log_artifact(model_path)
+    # guardar modelo en artifacts y loguear usando ruta relativa
+    model_path = os.path.join(artifacts_dir, cfg['output']['model_name'])
+    mlflow.sklearn.save_model(model, model_path)
+    mlflow.log_artifact(os.path.relpath(model_path))
 
-        print("Run metrics:", metrics)
+    print("Run metrics:", metrics)
 
 if __name__ == "__main__":
     main()
