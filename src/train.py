@@ -25,8 +25,8 @@ def main(cfg_path="config.yaml"):
     # Construir modelo
     model = build_model(cfg['train'])
 
-    # Crear carpeta artifacts relativa (siempre relativa, nunca absoluta)
-    artifacts_dir = "artifacts"
+    # Crear carpeta artifacts absoluta relativa al archivo actual
+    artifacts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "artifacts"))
     if not os.path.exists(artifacts_dir):
         os.makedirs(artifacts_dir, exist_ok=True)
 
