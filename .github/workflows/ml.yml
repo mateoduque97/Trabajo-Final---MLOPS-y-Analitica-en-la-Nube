@@ -36,7 +36,9 @@ jobs:
         run: |
           make test || echo "No tests yet"
 
-      # 5️⃣ Crear carpeta artifacts por si no existe
+      # 5️⃣ Limpiar y crear carpeta artifacts/mlruns
+      - name: Clean mlruns folder
+        run: rm -rf mlruns
       - name: Prepare artifacts folder
         run: mkdir -p artifacts mlruns
 
