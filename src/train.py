@@ -6,6 +6,8 @@ import joblib
 from data import load_data, preprocess, split
 from model import build_model, evaluate
 
+#flujo principal
+
 def main(cfg_path="config.yaml"):
     print("Current working directory:", os.getcwd())
     print("Script directory:", os.path.dirname(__file__))
