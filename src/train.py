@@ -26,7 +26,7 @@ def main(cfg_path="config.yaml"):
     model = build_model(cfg['train'])
 
     # Crear carpeta artifacts relativa
-    artifacts_dir = os.path.join(os.getcwd(), "artifacts")
+    artifacts_dir = "artifacts"
     os.makedirs(artifacts_dir, exist_ok=True)
 
     # Entrenar y loguear
