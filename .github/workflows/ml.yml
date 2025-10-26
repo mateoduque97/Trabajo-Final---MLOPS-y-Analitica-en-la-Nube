@@ -10,36 +10,46 @@ jobs:
   build-train:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}  # asegura que el cwd sea el repo
+
     steps:
-    # 1️⃣ Clonar el repositorio
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 1️⃣ Clonar el repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # 2️⃣ Configurar Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
+      # 2️⃣ Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-    # 3️⃣ Instalar dependencias
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        make install
+      # 3️⃣ Instalar dependencias
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make install
 
-    # 4️⃣ Ejecutar pruebas (si las tienes)
-    - name: Run tests
-      run: |
-        make test || echo "No tests yet"
+      # 4️⃣ Ejecutar pruebas (si las tienes)
+      - name: Run tests
+        run: |
+          make test || echo "No tests yet"
 
-    # 5️⃣ Entrenar el modelo
-    - name: Train model
-      run: |
-        make train
+      # 5️⃣ Crear carpeta artifacts por si no existe
+      - name: Prepare artifacts folder
+        run: mkdir -p artifacts mlruns
 
-    # 6️⃣ Subir el modelo como artefacto
-    - name: Upload trained model
-      uses: actions/upload-artifact@v4
-      with:
-        name: trained-model
-        path: mlruns/
+      # 6️⃣ Entrenar el modelo
+      - name: Train model
+        run: make train
+
+      # 7️⃣ Subir el modelo y artifacts como artifact
+      - name: Upload trained model
+        if: success() && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: |
+            mlruns/
+            artifacts/
