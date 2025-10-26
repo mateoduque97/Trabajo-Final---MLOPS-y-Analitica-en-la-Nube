@@ -9,7 +9,11 @@ from model import build_model, evaluate
 def main(cfg_path="config.yaml"):
     print("Current working directory:", os.getcwd())
     print("Script directory:", os.path.dirname(__file__))
+    # Crear carpeta artifacts absoluta relativa al archivo actual
+    artifacts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "artifacts"))
     print("artifacts_dir:", artifacts_dir)
+    if not os.path.exists(artifacts_dir):
+        os.makedirs(artifacts_dir, exist_ok=True)
     # Cargar configuración
     with open(cfg_path, 'r') as f:
         cfg = yaml.safe_load(f)
